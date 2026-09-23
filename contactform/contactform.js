@@ -89,7 +89,12 @@ jQuery(document).ready(function($) {
       }
     });
     if (ferror) return false;
-    else var str = $(this).serialize();
+    if (window.location.protocol === 'file:') {
+      $("#sendmessage").removeClass("show");
+      $("#errormessage").addClass("show").html('Please open this portfolio through its GitHub Pages URL or a local web server before sending.');
+      return false;
+    }
+    var str = $(this).serialize();
     var action = $(this).attr('action');
     if( ! action ) {
       action = 'contactform/contactform.php';
@@ -99,8 +104,7 @@ jQuery(document).ready(function($) {
       url: action,
       data: str,
       success: function(msg) {
-        // alert(msg);
-        if (msg == 'OK') {
+        if (msg.success === true || msg === 'OK') {
           $("#sendmessage").addClass("show");
           $("#errormessage").removeClass("show");
           $('.contactForm').find("input, textarea").val("");
@@ -109,7 +113,10 @@ jQuery(document).ready(function($) {
           $("#errormessage").addClass("show");
           $('#errormessage').html(msg);
         }
-
+      },
+      error: function() {
+        $("#sendmessage").removeClass("show");
+        $("#errormessage").addClass("show").html('Unable to send your message. Please try again.');
       }
     });
     return false;
