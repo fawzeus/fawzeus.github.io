@@ -104,10 +104,12 @@ jQuery(document).ready(function($) {
       url: action,
       data: str,
       success: function(msg) {
-        if (msg.success === true || msg === 'OK') {
+        if (msg.success === true || msg.success === 'true' || msg === 'OK') {
           $("#sendmessage").addClass("show");
           $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
+          $('.contactForm').find("input:not([type='hidden']), textarea").val("");
+          alert('✅ Message sent successfully!');
+          window.location.reload();
         } else {
           $("#sendmessage").removeClass("show");
           $("#errormessage").addClass("show");
