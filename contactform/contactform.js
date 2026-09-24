@@ -104,7 +104,15 @@ jQuery(document).ready(function($) {
       url: action,
       data: str,
       success: function(msg) {
-        if (msg.success === true || msg.success === 'true' || msg === 'OK') {
+        var response = msg;
+        if (typeof msg === 'string') {
+          try {
+            response = JSON.parse(msg);
+          } catch (error) {
+            response = msg;
+          }
+        }
+        if (response.success === true || response.success === 'true' || response === 'OK') {
           $("#sendmessage").addClass("show");
           $("#errormessage").removeClass("show");
           $('.contactForm').find("input:not([type='hidden']), textarea").val("");
