@@ -1,6 +1,49 @@
 jQuery(document).ready(function($) {
   "use strict";
 
+  function showContactSuccess() {
+    var popup = document.getElementById('contact-success-popup');
+
+    if (!popup) {
+      popup = document.createElement('div');
+      popup.id = 'contact-success-popup';
+      popup.className = 'contact-success-popup';
+      popup.setAttribute('aria-hidden', 'true');
+      popup.innerHTML = '<div class="contact-success-dialog" role="dialog" aria-modal="true" aria-labelledby="contact-success-title" aria-describedby="contact-success-description" tabindex="-1">' +
+        '<button class="contact-success-close" type="button" aria-label="Close confirmation">&times;</button>' +
+        '<div class="contact-success-icon" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><path d="m14 24 7 7 14-15" /></svg></div>' +
+        '<p class="contact-success-eyebrow">Message delivered</p>' +
+        '<h2 id="contact-success-title">Thank you for reaching out</h2>' +
+        '<p id="contact-success-description">Your message is on its way. I’ll get back to you as soon as I can.</p>' +
+        '<button class="contact-success-done" type="button">Done</button>' +
+        '</div>';
+      document.body.appendChild(popup);
+
+      $(popup).on('click', '.contact-success-close, .contact-success-done', closeContactSuccess);
+      $(popup).on('click', function(event) {
+        if (event.target === popup) closeContactSuccess();
+      });
+    }
+
+    popup.returnFocus = document.activeElement;
+    popup.setAttribute('aria-hidden', 'false');
+    popup.classList.add('is-visible');
+    popup.querySelector('.contact-success-dialog').focus();
+
+    function closeContactSuccess() {
+      popup.classList.remove('is-visible');
+      popup.setAttribute('aria-hidden', 'true');
+      $(document).off('keydown.contactSuccess');
+      if (popup.returnFocus && typeof popup.returnFocus.focus === 'function') popup.returnFocus.focus();
+    }
+
+    $(document).off('keydown.contactSuccess').on('keydown.contactSuccess', function(event) {
+      if (event.key === 'Escape' && popup.classList.contains('is-visible')) {
+        closeContactSuccess();
+      }
+    });
+  }
+
   //Contact
   $('form.contactForm').submit(function() {
     var f = $(this).find('.form-group'),
@@ -116,8 +159,7 @@ jQuery(document).ready(function($) {
           $("#sendmessage").addClass("show");
           $("#errormessage").removeClass("show");
           $('.contactForm').find("input:not([type='hidden']), textarea").val("");
-          alert('✅ Message sent successfully!');
-          window.location.reload();
+          showContactSuccess();
         } else {
           $("#sendmessage").removeClass("show");
           $("#errormessage").addClass("show");

@@ -1125,6 +1125,155 @@ footer .credits a {
   font-size: 13px;
 }
 
+.contact-success-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(12, 25, 38, 0.68);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.contact-success-popup.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.contact-success-dialog {
+  position: relative;
+  width: min(100%, 460px);
+  padding: 48px 40px 40px;
+  border-radius: 8px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+  transform: translateY(14px) scale(0.98);
+  transition: transform 220ms ease;
+}
+
+.is-visible .contact-success-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.contact-success-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #66717d;
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.contact-success-close:hover,
+.contact-success-close:focus {
+  background: #f0f4f8;
+  color: #1c2733;
+}
+
+.contact-success-icon {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 22px;
+  place-items: center;
+  border-radius: 50%;
+  background: #e8f7ef;
+  color: #1d9b5c;
+}
+
+.contact-success-icon svg {
+  width: 42px;
+  height: 42px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.5;
+}
+
+.contact-success-eyebrow {
+  margin: 0 0 9px;
+  color: #1d9b5c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.contact-success-dialog h2 {
+  margin: 0 0 12px;
+  color: #1e2a36;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.contact-success-dialog > p:not(.contact-success-eyebrow) {
+  margin: 0 auto 27px;
+  max-width: 330px;
+  color: #65717d;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.contact-success-done {
+  min-width: 132px;
+  padding: 11px 26px;
+  border: 0;
+  border-radius: 4px;
+  background: #0078ff;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.contact-success-done:hover {
+  background: #0062d3;
+  transform: translateY(-1px);
+}
+
+.contact-success-close:focus-visible,
+.contact-success-done:focus-visible,
+.contact-success-dialog:focus-visible {
+  outline: 3px solid rgba(0, 120, 255, 0.4);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .contact-success-popup {
+    padding: 18px;
+  }
+
+  .contact-success-dialog {
+    padding: 44px 24px 30px;
+  }
+
+  .contact-success-dialog h2 {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-success-popup,
+  .contact-success-dialog,
+  .contact-success-done {
+    transition: none;
+  }
+}
+
 /*======================================
 //--//-->   BUTTON
 ======================================*/
